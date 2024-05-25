@@ -29,7 +29,7 @@ const authenticatedUser = (username,password)=>{
 
 const app = express();
 
-app.use(session({secret:"fingerpint"},resave=true,saveUninitialized=true));
+app.use(session({secret:"fingerpint"},resave=false,saveUninitialized=true));
 
 app.use(express.json());
 
@@ -61,7 +61,7 @@ app.post("/login", (req,res) => {
   if (authenticatedUser(username,password)) {
     let accessToken = jwt.sign({
       data: password
-    }, 'access', { expiresIn: 60 * 60 });
+    }, 'access', { expiresIn: 60 });
 
     req.session.authorization = {
       accessToken,username
